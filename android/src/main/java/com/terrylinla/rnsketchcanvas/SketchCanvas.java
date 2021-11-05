@@ -60,6 +60,7 @@ public class SketchCanvas extends View {
     public SketchCanvas(ThemedReactContext context) {
         super(context);
         mContext = context;
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
@@ -187,10 +188,10 @@ public class SketchCanvas extends View {
         mCurrentPath = new SketchData(id, strokeColor, strokeWidth);
         mPaths.add(mCurrentPath);
         boolean isErase = strokeColor == Color.TRANSPARENT;
-        if (isErase && mDisableHardwareAccelerated == false) {
-            mDisableHardwareAccelerated = true;
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+//        if (isErase && mDisableHardwareAccelerated == false) {
+//            mDisableHardwareAccelerated = true;
+//
+//        }
         invalidateCanvas(true);
     }
 
@@ -219,10 +220,7 @@ public class SketchCanvas extends View {
             SketchData newPath = new SketchData(id, strokeColor, strokeWidth, points);
             mPaths.add(newPath);
             boolean isErase = strokeColor == Color.TRANSPARENT;
-            if (isErase && mDisableHardwareAccelerated == false) {
-                mDisableHardwareAccelerated = true;
-                setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-            }
+
             newPath.draw(mDrawingCanvas);
             invalidateCanvas(true);
         }
@@ -248,7 +246,7 @@ public class SketchCanvas extends View {
         if (mCurrentPath != null) {
             if (mCurrentPath.isTranslucent) {
                 mCurrentPath.draw(mDrawingCanvas);
-                mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
+                mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             }
             mCurrentPath = null;
         }
