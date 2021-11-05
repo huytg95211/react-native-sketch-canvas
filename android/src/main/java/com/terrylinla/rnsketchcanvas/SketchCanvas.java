@@ -61,6 +61,7 @@ public class SketchCanvas extends View {
         super(context);
         mContext = context;
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
