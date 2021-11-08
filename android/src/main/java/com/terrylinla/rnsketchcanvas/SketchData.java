@@ -51,55 +51,55 @@ public class SketchData {
 
         int pointsCount = points.size();
 
-//        if (this.isTranslucent) {
-//            if (pointsCount >= 3) {
-//                addPointToPath(mPath,
-//                        this.points.get(pointsCount - 3),
-//                        this.points.get(pointsCount - 2),
-//                        p);
-//            } else if (pointsCount >= 2) {
-//                addPointToPath(mPath, this.points.get(0), this.points.get(0), p);
-//            } else {
-//                addPointToPath(mPath, p, p, p);
-//            }
-//
-//            float x = p.x, y = p.y;
-//            if (mDirty == null) {
-//                mDirty = new RectF(x, y, x + 1, y + 1);
-//                updateRect = new RectF(x - this.strokeWidth, y - this.strokeWidth,
-//                        x + this.strokeWidth, y + this.strokeWidth);
-//            } else {
-//                mDirty.union(x, y);
-//                updateRect = new RectF(
-//                        mDirty.left - this.strokeWidth, mDirty.top - this.strokeWidth,
-//                        mDirty.right + this.strokeWidth, mDirty.bottom + this.strokeWidth
-//                );
-//            }
-//        } else {
-        if (pointsCount >= 3) {
-            PointF a = points.get(pointsCount - 3);
-            PointF b = points.get(pointsCount - 2);
-            PointF c = p;
-            PointF prevMid = midPoint(a, b);
-            PointF currentMid = midPoint(b, c);
+        if (this.isTranslucent) {
+            if (pointsCount >= 3) {
+                addPointToPath(mPath,
+                        this.points.get(pointsCount - 3),
+                        this.points.get(pointsCount - 2),
+                        p);
+            } else if (pointsCount >= 2) {
+                addPointToPath(mPath, this.points.get(0), this.points.get(0), p);
+            } else {
+                addPointToPath(mPath, p, p, p);
+            }
 
-            updateRect = new RectF(prevMid.x, prevMid.y, prevMid.x, prevMid.y);
-            updateRect.union(b.x, b.y);
-            updateRect.union(currentMid.x, currentMid.y);
-        } else if (pointsCount >= 2) {
-            PointF a = points.get(pointsCount - 2);
-            PointF b = p;
-            PointF mid = midPoint(a, b);
-
-            updateRect = new RectF(a.x, a.y, a.x, a.y);
-            updateRect.union(mid.x, mid.y);
+            float x = p.x, y = p.y;
+            if (mDirty == null) {
+                mDirty = new RectF(x, y, x + 1, y + 1);
+                updateRect = new RectF(x - this.strokeWidth, y - this.strokeWidth,
+                        x + this.strokeWidth, y + this.strokeWidth);
+            } else {
+                mDirty.union(x, y);
+                updateRect = new RectF(
+                        mDirty.left - this.strokeWidth, mDirty.top - this.strokeWidth,
+                        mDirty.right + this.strokeWidth, mDirty.bottom + this.strokeWidth
+                );
+            }
         } else {
-            updateRect = new RectF(p.x, p.y, p.x, p.y);
+            if (pointsCount >= 3) {
+                PointF a = points.get(pointsCount - 3);
+                PointF b = points.get(pointsCount - 2);
+                PointF c = p;
+                PointF prevMid = midPoint(a, b);
+                PointF currentMid = midPoint(b, c);
+
+                updateRect = new RectF(prevMid.x, prevMid.y, prevMid.x, prevMid.y);
+                updateRect.union(b.x, b.y);
+                updateRect.union(currentMid.x, currentMid.y);
+            } else if (pointsCount >= 2) {
+                PointF a = points.get(pointsCount - 2);
+                PointF b = p;
+                PointF mid = midPoint(a, b);
+
+                updateRect = new RectF(a.x, a.y, a.x, a.y);
+                updateRect.union(mid.x, mid.y);
+            } else {
+                updateRect = new RectF(p.x, p.y, p.x, p.y);
+            }
+
+            updateRect.inset(-strokeWidth * 2, -strokeWidth * 2);
+
         }
-
-        updateRect.inset(-strokeWidth * 2, -strokeWidth * 2);
-
-//        }
         Rect integralRect = new Rect();
         updateRect.roundOut(integralRect);
 
@@ -139,7 +139,7 @@ public class SketchData {
             mPaint.setAntiAlias(true);
             mPaint.setDither(false);
             mPaint.setMaskFilter(new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL));
-            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.DST_ATOP));
+            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.SRC_OVER));
         }
         return mPaint;
     }
