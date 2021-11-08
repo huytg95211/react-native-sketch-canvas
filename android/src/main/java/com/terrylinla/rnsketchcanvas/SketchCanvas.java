@@ -47,7 +47,7 @@ public class SketchCanvas extends View {
     private ThemedReactContext mContext;
     private boolean mDisableHardwareAccelerated = false;
 
-    private Paint mPaint = new Paint();
+    private Paint mPaint = new Paint(Paint.DITHER_FLAG);
     private Bitmap mDrawingBitmap = null, mTranslucentDrawingBitmap = null;
     private Canvas mDrawingCanvas = null, mTranslucentDrawingCanvas = null;
 
@@ -202,7 +202,7 @@ public class SketchCanvas extends View {
         Rect updateRect = mCurrentPath.addPoint(new PointF(x, y));
 
         if (mCurrentPath.isTranslucent) {
-//            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_OVER);
+            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             mCurrentPath.draw(mTranslucentDrawingCanvas);
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
