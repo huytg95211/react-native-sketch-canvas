@@ -207,7 +207,7 @@ public class SketchCanvas extends View {
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
         }
-        invalidate(updateRect);
+        invalidate();
     }
 
     public void addPath(int id, int strokeColor, float strokeWidth, ArrayList<PointF> points) {
