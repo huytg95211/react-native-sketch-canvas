@@ -137,6 +137,7 @@ public class SketchData {
             mPaint.setStrokeCap(Paint.Cap.ROUND);
             mPaint.setStrokeJoin(Paint.Join.ROUND);
             mPaint.setAntiAlias(true);
+            mPaint.setDither(true);
             mPaint.setMaskFilter(new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL));
             mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.DST_ATOP));
         }

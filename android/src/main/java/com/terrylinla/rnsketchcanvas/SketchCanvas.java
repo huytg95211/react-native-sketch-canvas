@@ -202,9 +202,10 @@ public class SketchCanvas extends View {
         Rect updateRect = mCurrentPath.addPoint(new PointF(x, y));
 
         if (mCurrentPath.isTranslucent) {
-            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
+            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             mCurrentPath.draw(mTranslucentDrawingCanvas);
         } else {
+            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             mCurrentPath.drawLastPoint(mDrawingCanvas);
         }
         invalidate(updateRect);
