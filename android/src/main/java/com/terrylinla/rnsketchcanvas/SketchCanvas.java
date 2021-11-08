@@ -64,7 +64,6 @@ public class SketchCanvas extends View {
     public SketchCanvas(ThemedReactContext context) {
         super(context);
         mContext = context;
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
@@ -194,6 +193,7 @@ public class SketchCanvas extends View {
         boolean isErase = strokeColor == Color.TRANSPARENT;
         if (isErase && mDisableHardwareAccelerated == false) {
             mDisableHardwareAccelerated = true;
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         invalidateCanvas(true);
     }
@@ -204,6 +204,7 @@ public class SketchCanvas extends View {
         if (mCurrentPath.isTranslucent) {
             mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             mCurrentPath.draw(mTranslucentDrawingCanvas);
+            invalidate();
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
         }
@@ -361,9 +362,9 @@ public class SketchCanvas extends View {
             canvas.drawBitmap(mDrawingBitmap, 0, 0, mPaint);
         }
 
-//        if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
-//            canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
-//        }
+        if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
+            canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
+        }
 
         for (CanvasText text : mArrTextOnSketch) {
             canvas.drawText(text.text, text.drawPosition.x + text.lineOffset.x, text.drawPosition.y + text.lineOffset.y, text.paint);
