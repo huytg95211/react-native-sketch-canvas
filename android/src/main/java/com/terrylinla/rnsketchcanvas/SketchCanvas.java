@@ -64,6 +64,7 @@ public class SketchCanvas extends View {
     public SketchCanvas(ThemedReactContext context) {
         super(context);
         mContext = context;
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
@@ -193,7 +194,6 @@ public class SketchCanvas extends View {
         boolean isErase = strokeColor == Color.TRANSPARENT;
         if (isErase && mDisableHardwareAccelerated == false) {
             mDisableHardwareAccelerated = true;
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         invalidateCanvas(true);
     }
