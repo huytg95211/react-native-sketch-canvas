@@ -139,7 +139,7 @@ public class SketchData {
             mPaint.setAntiAlias(true);
             mPaint.setDither(false);
             mPaint.setMaskFilter(new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL));
-            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.SRC_OUT));
+            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.SRC));
         }
         return mPaint;
     }
