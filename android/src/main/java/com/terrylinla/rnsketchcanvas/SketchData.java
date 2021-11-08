@@ -126,7 +126,22 @@ public class SketchData {
         }
     }
 
-    private Paint getPaint() {
+    public void draw(Canvas canvas, boolean isMultiply) {
+        if (this.isTranslucent) {
+            canvas.drawPath(mPath, getPaint(isMultiply));
+        } else {
+            int pointsCount = points.size();
+            for (int i = 0; i < pointsCount; i++) {
+                draw(canvas, i);
+            }
+        }
+    }
+
+    private Paint getPaint(){
+        return getPaint(false);
+    }
+
+    private Paint getPaint(boolean isMultiply) {
         if (mPaint == null) {
             boolean isErase = strokeColor == Color.TRANSPARENT;
 
@@ -138,10 +153,12 @@ public class SketchData {
             mPaint.setStrokeJoin(Paint.Join.ROUND);
             mPaint.setAntiAlias(true);
             mPaint.setMaskFilter(new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL));
-            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.DST_ATOP));
+            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : isMultiply ?
+                    PorterDuff.Mode.MULTIPLY : PorterDuff.Mode.DST_ATOP));
         }
         return mPaint;
     }
+
 
     private void draw(Canvas canvas, int pointIndex) {
         int pointsCount = points.size();
