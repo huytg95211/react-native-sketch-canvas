@@ -47,7 +47,7 @@ public class SketchCanvas extends View {
     private ThemedReactContext mContext;
     private boolean mDisableHardwareAccelerated = false;
 
-    private Paint mPaint = new Paint();
+    private Paint mPaint = new Paint(Paint.DITHER_FLAG);
     private Bitmap mDrawingBitmap = null, mTranslucentDrawingBitmap = null;
     private Canvas mDrawingCanvas = null, mTranslucentDrawingCanvas = null;
 
@@ -362,7 +362,6 @@ public class SketchCanvas extends View {
         }
 
         if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
             canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
         }
 
