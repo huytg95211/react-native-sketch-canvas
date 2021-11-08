@@ -203,7 +203,7 @@ public class SketchCanvas extends View {
 
         if (mCurrentPath.isTranslucent) {
             mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
-            mCurrentPath.draw(mTranslucentDrawingCanvas, true);
+            mCurrentPath.draw(mTranslucentDrawingCanvas);
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
         }
