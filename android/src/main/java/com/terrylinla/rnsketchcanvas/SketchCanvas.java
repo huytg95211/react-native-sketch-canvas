@@ -361,9 +361,10 @@ public class SketchCanvas extends View {
             canvas.drawBitmap(mDrawingBitmap, 0, 0, mPaint);
         }
 
-//        if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
-//            canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
-//        }
+        if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
+            canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
+        }
 
         for (CanvasText text : mArrTextOnSketch) {
             canvas.drawText(text.text, text.drawPosition.x + text.lineOffset.x, text.drawPosition.y + text.lineOffset.y, text.paint);
