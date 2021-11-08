@@ -338,7 +338,7 @@ public class SketchCanvas extends View {
         super.onDraw(canvas);
 
         if (mNeedsFullRedraw && mDrawingCanvas != null) {
-            mDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
+            mDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.DST_ATOP);
             for(SketchData path: mPaths) {
                 path.draw(mDrawingCanvas);
             }
