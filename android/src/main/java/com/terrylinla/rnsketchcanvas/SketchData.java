@@ -23,10 +23,6 @@ public class SketchData {
     private Path mPath;
     private RectF mDirty = null;
 
-    public static PointF midPoint(PointF p1, PointF p2) {
-        return new PointF((p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f);
-    }
-
     public SketchData(int id, int strokeColor, float strokeWidth) {
         this.id = id;
         this.strokeColor = strokeColor;
@@ -44,6 +40,10 @@ public class SketchData {
         mPath = this.isTranslucent ? evaluatePath() : null;
     }
 
+    public static PointF midPoint(PointF p1, PointF p2) {
+        return new PointF((p1.x + p2.x) * 0.5f, (p1.y + p2.y) * 0.5f);
+    }
+
     public Rect addPoint(PointF p) {
         points.add(p);
 
@@ -53,10 +53,10 @@ public class SketchData {
 
         if (this.isTranslucent) {
             if (pointsCount >= 3) {
-                addPointToPath(mPath, 
-                    this.points.get(pointsCount - 3), 
-                    this.points.get(pointsCount - 2),
-                    p);
+                addPointToPath(mPath,
+                        this.points.get(pointsCount - 3),
+                        this.points.get(pointsCount - 2),
+                        p);
             } else if (pointsCount >= 2) {
                 addPointToPath(mPath, this.points.get(0), this.points.get(0), p);
             } else {
@@ -66,14 +66,14 @@ public class SketchData {
             float x = p.x, y = p.y;
             if (mDirty == null) {
                 mDirty = new RectF(x, y, x + 1, y + 1);
-                updateRect = new RectF(x - this.strokeWidth, y - this.strokeWidth, 
-                    x + this.strokeWidth, y + this.strokeWidth);
+                updateRect = new RectF(x - this.strokeWidth, y - this.strokeWidth,
+                        x + this.strokeWidth, y + this.strokeWidth);
             } else {
                 mDirty.union(x, y);
                 updateRect = new RectF(
-                                    mDirty.left - this.strokeWidth, mDirty.top - this.strokeWidth,
-                                    mDirty.right + this.strokeWidth, mDirty.bottom + this.strokeWidth
-                                    );
+                        mDirty.left - this.strokeWidth, mDirty.top - this.strokeWidth,
+                        mDirty.right + this.strokeWidth, mDirty.bottom + this.strokeWidth
+                );
             }
         } else {
             if (pointsCount >= 3) {
@@ -102,7 +102,7 @@ public class SketchData {
         }
         Rect integralRect = new Rect();
         updateRect.roundOut(integralRect);
-        
+
         return integralRect;
     }
 
@@ -137,7 +137,7 @@ public class SketchData {
         }
     }
 
-    private Paint getPaint(){
+    private Paint getPaint() {
         return getPaint(false);
     }
 
@@ -153,8 +153,10 @@ public class SketchData {
             mPaint.setStrokeJoin(Paint.Join.ROUND);
             mPaint.setAntiAlias(true);
             mPaint.setMaskFilter(new BlurMaskFilter(20, BlurMaskFilter.Blur.NORMAL));
-            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : isMultiply ?
-                    PorterDuff.Mode.MULTIPLY : PorterDuff.Mode.DST_ATOP));
+            mPaint.setXfermode(new PorterDuffXfermode(isErase ? PorterDuff.Mode.CLEAR : PorterDuff.Mode.DST_ATOP));
+        } else {
+            if (isMultiply)
+                mPaint.setXfermode(null);
         }
         return mPaint;
     }
@@ -199,14 +201,14 @@ public class SketchData {
         int pointsCount = points.size();
         Path path = new Path();
 
-        for(int pointIndex=0; pointIndex<pointsCount; pointIndex++) {
+        for (int pointIndex = 0; pointIndex < pointsCount; pointIndex++) {
             if (pointsCount >= 3 && pointIndex >= 2) {
                 PointF a = points.get(pointIndex - 2);
                 PointF b = points.get(pointIndex - 1);
                 PointF c = points.get(pointIndex);
                 PointF prevMid = midPoint(a, b);
                 PointF currentMid = midPoint(b, c);
-                
+
                 // Draw a curve
                 path.moveTo(prevMid.x, prevMid.y);
                 path.quadTo(b.x, b.y, currentMid.x, currentMid.y);
@@ -214,14 +216,14 @@ public class SketchData {
                 PointF a = points.get(pointIndex - 1);
                 PointF b = points.get(pointIndex);
                 PointF mid = midPoint(a, b);
-                
+
                 // Draw a line to the middle of points a and b
                 // This is so the next draw which uses a curve looks correct and continues from there
                 path.moveTo(a.x, a.y);
                 path.lineTo(mid.x, mid.y);
             } else if (pointsCount >= 1) {
                 PointF a = points.get(pointIndex);
-                
+
                 // Draw a single point
                 path.moveTo(a.x, a.y);
                 path.lineTo(a.x, a.y);
