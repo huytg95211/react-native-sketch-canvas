@@ -116,10 +116,8 @@ public class SketchData {
     }
 
     public void draw(Canvas canvas) {
-        Paint curPaint = getPaint();
-        curPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
         if (this.isTranslucent) {
-            canvas.drawPath(mPath, curPaint);
+            canvas.drawPath(mPath, getPaint());
         } else {
             int pointsCount = points.size();
             for (int i = 0; i < pointsCount; i++) {
@@ -153,9 +151,6 @@ public class SketchData {
             return;
         }
 
-        Paint curPaint = getPaint();
-        curPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_ATOP));
-
         if (pointsCount >= 3 && pointIndex >= 2) {
             PointF a = points.get(pointIndex - 2);
             PointF b = points.get(pointIndex - 1);
@@ -168,7 +163,7 @@ public class SketchData {
             path.moveTo(prevMid.x, prevMid.y);
             path.quadTo(b.x, b.y, currentMid.x, currentMid.y);
 
-            canvas.drawPath(path, curPaint);
+            canvas.drawPath(path, getPaint());
         } else if (pointsCount >= 2 && pointIndex >= 1) {
             PointF a = points.get(pointIndex - 1);
             PointF b = points.get(pointIndex);
@@ -176,12 +171,12 @@ public class SketchData {
 
             // Draw a line to the middle of points a and b
             // This is so the next draw which uses a curve looks correct and continues from there
-            canvas.drawLine(a.x, a.y, mid.x, mid.y, curPaint);
+            canvas.drawLine(a.x, a.y, mid.x, mid.y, getPaint());
         } else if (pointsCount >= 1) {
             PointF a = points.get(pointIndex);
 
             // Draw a single point
-            canvas.drawPoint(a.x, a.y, curPaint);
+            canvas.drawPoint(a.x, a.y, getPaint());
         }
     }
 
