@@ -357,10 +357,10 @@ public class SketchCanvas extends View {
             canvas.drawText(text.text, text.drawPosition.x + text.lineOffset.x, text.drawPosition.y + text.lineOffset.y, text.paint);
         }
 
-//        if (mDrawingBitmap != null) {
-//            canvas.drawBitmap(mDrawingBitmap, 0, 0, mPaint);
-//        }
-//
+        if (mDrawingBitmap != null) {
+            canvas.drawBitmap(mDrawingBitmap, 0, 0, mPaint);
+        }
+
 //        if (mTranslucentDrawingBitmap != null && mCurrentPath != null && mCurrentPath.isTranslucent) {
 //            canvas.drawBitmap(mTranslucentDrawingBitmap, 0, 0, mPaint);
 //        }
