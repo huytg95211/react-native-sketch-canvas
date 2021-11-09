@@ -64,7 +64,6 @@ public class SketchCanvas extends View {
     public SketchCanvas(ThemedReactContext context) {
         super(context);
         mContext = context;
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
@@ -203,6 +202,7 @@ public class SketchCanvas extends View {
         Rect updateRect = mCurrentPath.addPoint(new PointF(x, y));
 
         if (mCurrentPath.isTranslucent) {
+            mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             mCurrentPath.draw(mTranslucentDrawingCanvas);
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
@@ -249,6 +249,7 @@ public class SketchCanvas extends View {
         if (mCurrentPath != null) {
             if (mCurrentPath.isTranslucent) {
                 mCurrentPath.draw(mDrawingCanvas);
+                mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             }
             mCurrentPath = null;
         }
