@@ -64,6 +64,7 @@ public class SketchCanvas extends View {
     public SketchCanvas(ThemedReactContext context) {
         super(context);
         mContext = context;
+        setLayerType(LAYER_TYPE_HARDWARE, null);
     }
 
     public boolean openImageFile(String filename, String directory, String mode) {
