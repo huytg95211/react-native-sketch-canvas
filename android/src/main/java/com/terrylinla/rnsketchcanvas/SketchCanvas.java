@@ -37,6 +37,7 @@ class CanvasText {
     public boolean isAbsoluteCoordinate;
     public Rect textBounds;
     public float height;
+    private int alpha = 100;
 }
 
 public class SketchCanvas extends View {
@@ -336,7 +337,7 @@ public class SketchCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), 30,
+        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), alpha,
                 Canvas.ALL_SAVE_FLAG);
 
         if (mNeedsFullRedraw && mDrawingCanvas != null) {
@@ -422,5 +423,9 @@ public class SketchCanvas extends View {
             }
         }
         return bitmap;
+    }
+
+    public void setAlpha(int alpha) {
+        this.alpha = alpha;
     }
 }
