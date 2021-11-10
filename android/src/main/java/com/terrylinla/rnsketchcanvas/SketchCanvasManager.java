@@ -129,7 +129,7 @@ public class SketchCanvasManager extends SimpleViewManager<SketchCanvas> {
                 return;
             }
             case COMMAND_SET_ALPHA: {
-                view.setAlpha(args.getInt(0))
+                view.setAlpha(args.getInt(0));
                 return;
             }
             default:
