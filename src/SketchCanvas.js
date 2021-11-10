@@ -227,6 +227,11 @@ class SketchCanvas extends React.Component {
   }
 
   componentWillMount () {
+    //  UIManager.dispatchViewManagerCommand(
+    //   this._handle,
+    //   UIManager.RNSketchCanvas.Commands.setAlpha,
+    //   [props.alpha]
+    // ) // Set alpha for draw line without overlap (0 -> 255)
     this.panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -363,7 +368,6 @@ class SketchCanvas extends React.Component {
         permissionDialogTitle={this.props.permissionDialogTitle}
         permissionDialogMessage={this.props.permissionDialogMessage}
         text={this.state.text}
-        drawAlpha={this.props.alpha}
       />
     )
   }
