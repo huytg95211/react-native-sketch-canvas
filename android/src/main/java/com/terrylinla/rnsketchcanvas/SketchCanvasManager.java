@@ -42,6 +42,7 @@ public class SketchCanvasManager extends SimpleViewManager<SketchCanvas> {
 
     private static final String PROPS_LOCAL_SOURCE_IMAGE = "localSourceImage";
     private static final String PROPS_TEXT = "text";
+    private static final String PROPS_ALPHA = "drawAlpha";
 
     @Override
     public String getName() {
@@ -68,6 +69,11 @@ public class SketchCanvasManager extends SimpleViewManager<SketchCanvas> {
     @ReactProp(name = PROPS_TEXT)
     public void setText(SketchCanvas viewContainer, ReadableArray text) {
         viewContainer.setCanvasText(text);
+    }
+
+    @ReactProp(name = PROPS_ALPHA)
+    public void setDrawAlpha(SketchCanvas viewContainer, int alpha) {
+        viewContainer.setAlpha(alpha);
     }
 
     @Override
