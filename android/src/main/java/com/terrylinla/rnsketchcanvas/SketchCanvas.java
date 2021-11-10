@@ -204,6 +204,8 @@ public class SketchCanvas extends View {
 
         if (mCurrentPath.isTranslucent) {
             mTranslucentDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            mTranslucentDrawingCanvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), alpha,
+                    Canvas.ALL_SAVE_FLAG);
             mCurrentPath.draw(mTranslucentDrawingCanvas);
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
@@ -337,9 +339,6 @@ public class SketchCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), alpha,
-                Canvas.ALL_SAVE_FLAG);
-
         if (mNeedsFullRedraw && mDrawingCanvas != null) {
             mDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
             for (SketchData path : mPaths) {
