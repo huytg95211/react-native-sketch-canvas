@@ -153,7 +153,7 @@ class SketchCanvas extends React.Component {
   }
 
   componentWillMount() {
-    UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.setAlpha, [this.props.alpha]) // Set alpha for draw line without overlap
+    // UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.setAlpha, [this.props.alpha]) // Set alpha for draw line without overlap
     this.panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: (evt, gestureState) => true,
