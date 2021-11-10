@@ -36,7 +36,7 @@ public class SketchCanvasManager extends SimpleViewManager<SketchCanvas> {
     public static final int COMMAND_DELETE_PATH = 5;
     public static final int COMMAND_SAVE = 6;
     public static final int COMMAND_END_PATH = 7;
-    public static final int COMMAND_SET_ALPHA = 9;
+    public static final int COMMAND_SET_ALPHA = 8;
 
     public static SketchCanvas Canvas = null;
 
