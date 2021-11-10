@@ -207,7 +207,7 @@ public class SketchCanvas extends View {
         } else {
             mCurrentPath.drawLastPoint(mDrawingCanvas);
         }
-        postInvalidate();
+        invalidate(updateRect);
     }
 
     public void addPath(int id, int strokeColor, float strokeWidth, ArrayList<PointF> points) {
@@ -336,6 +336,8 @@ public class SketchCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), 30,
+                Canvas.ALL_SAVE_FLAG);
 
         if (mNeedsFullRedraw && mDrawingCanvas != null) {
             mDrawingCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.SRC);
@@ -368,6 +370,8 @@ public class SketchCanvas extends View {
         for (CanvasText text : mArrTextOnSketch) {
             canvas.drawText(text.text, text.drawPosition.x + text.lineOffset.x, text.drawPosition.y + text.lineOffset.y, text.paint);
         }
+
+        canvas.restore();
     }
 
     private void invalidateCanvas(boolean shouldDispatchEvent) {
