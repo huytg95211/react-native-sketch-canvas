@@ -37,7 +37,6 @@ class CanvasText {
     public boolean isAbsoluteCoordinate;
     public Rect textBounds;
     public float height;
-    private int alpha = 100;
 }
 
 public class SketchCanvas extends View {
@@ -57,6 +56,7 @@ public class SketchCanvas extends View {
     private int mOriginalWidth, mOriginalHeight;
     private Bitmap mBackgroundImage;
     private String mContentMode;
+    private int alpha = 100;
 
     private ArrayList<CanvasText> mArrCanvasText = new ArrayList<CanvasText>();
     private ArrayList<CanvasText> mArrTextOnSketch = new ArrayList<CanvasText>();
