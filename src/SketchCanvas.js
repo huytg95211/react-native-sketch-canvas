@@ -33,7 +33,7 @@ class SketchCanvas extends React.Component {
     onStrokeEnd: PropTypes.func,
     onSketchSaved: PropTypes.func,
     user: PropTypes.string,
-
+    alpha: PropTypes.number,
     touchEnabled: PropTypes.bool,
 
     text: PropTypes.arrayOf(PropTypes.shape({
@@ -64,7 +64,7 @@ class SketchCanvas extends React.Component {
     onStrokeEnd: () => { },
     onSketchSaved: () => { },
     user: null,
-
+    alpha: 100,
     touchEnabled: true,
 
     text: null,
@@ -153,6 +153,7 @@ class SketchCanvas extends React.Component {
   }
 
   componentWillMount() {
+    UIManager.dispatchViewManagerCommand(this._handle, UIManager.RNSketchCanvas.Commands.setAlpha, [this.props.alpha]) // Set alpha for draw line without overlap
     this.panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: (evt, gestureState) => true,
