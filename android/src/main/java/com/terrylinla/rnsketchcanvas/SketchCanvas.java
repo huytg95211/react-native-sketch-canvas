@@ -56,7 +56,7 @@ public class SketchCanvas extends View {
     private int mOriginalWidth, mOriginalHeight;
     private Bitmap mBackgroundImage;
     private String mContentMode;
-    private int alpha = 100;
+    private int alpha = 255;
 
     private ArrayList<CanvasText> mArrCanvasText = new ArrayList<CanvasText>();
     private ArrayList<CanvasText> mArrTextOnSketch = new ArrayList<CanvasText>();
