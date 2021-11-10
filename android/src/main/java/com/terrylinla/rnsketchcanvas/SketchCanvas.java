@@ -427,6 +427,5 @@ public class SketchCanvas extends View {
 
     public void setAlpha(int alpha) {
         this.alpha = alpha;
-        invalidate();
     }
 }
